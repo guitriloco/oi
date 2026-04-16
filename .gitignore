@@ -1,3 +1,7 @@
+# Supra-Codex
+mutation_logs/
+build_sandbox/
+
 # Python
 __pycache__/
 *.py[cod]
