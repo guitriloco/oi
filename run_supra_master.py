@@ -8,43 +8,52 @@ from pipeline.mutator import Mutator
 from integrity.validator import Validator
 from orchestration.rebuilder import Rebuilder
 
+# Initial attempt to load the core module
 try:
     import wraith_core
 except ImportError:
-    print("Warning: wraith_core not found. Ensure the project is built.")
+    print("Warning: wraith_core not found. It will be built during the first cycle or needs manual build.")
     wraith_core = None
 
 class Node:
     def __init__(self, node_id):
         self.node_id = node_id
-        if wraith_core:
-            self.engine = wraith_core.WraithEngine(f"Node-{node_id}")
-        else:
-            self.engine = None
+        # We'll use the global wraith_core which might be reloaded
     
     def run_task(self, task_data):
-        # print(f"Node {self.node_id} starting task: {task_data}")
+        # Access the current wraith_core from global scope
+        global wraith_core
         # Simulate some work
         time.sleep(random.uniform(0.01, 0.05))
-        if self.engine:
-            result = self.engine.process_data(task_data)
+        if wraith_core:
+            try:
+                engine = wraith_core.WraithEngine(f"Node-{self.node_id}")
+                result = engine.process_data(task_data)
+            except Exception as e:
+                result = f"[Node-{self.node_id}] Error: {e}"
         else:
             result = f"[Node-{self.node_id} (Mock)] Processed: {task_data}"
-        # print(f"Node {self.node_id} finished task: {task_data}")
         return result
 
 def audit(execution_time, task_count):
+    """
+    AUDIT phase: analyze performance signals.
+    """
     avg_time = execution_time / task_count if task_count > 0 else 0
-    print(f"[AUDIT] Total time: {execution_time:.4f}s for {task_count} tasks.")
+    print(f"\n[AUDIT] Total time: {execution_time:.4f}s for {task_count} tasks.")
     print(f"[AUDIT] Average task execution time: {avg_time:.4f}s")
-    return {"avg_execution_time": avg_time, "timestamp": time.time()}
+    return {"avg_execution_time": avg_time, "task_count": task_count, "timestamp": time.time()}
 
 def run_mutation_cycle(performance_signals):
-    print("[MUTATE] Starting mutation phase...")
+    """
+    Full Mutation Phase: MUTATE -> VALIDATE -> REBUILD
+    """
+    print("\n[MUTATE] Starting mutation phase...")
     mutator = Mutator()
     target_file = "src/wraith_engine.cpp"
-    mutated_code = mutator.mutate(target_file, performance_signals)
     
+    # MUTATE
+    mutated_code = mutator.mutate(target_file, performance_signals)
     if not mutated_code:
         print("[MUTATE] Mutation failed to generate.")
         return False
@@ -52,23 +61,31 @@ def run_mutation_cycle(performance_signals):
     mutation_path = mutator.save_mutation(mutated_code, target_file)
     print(f"[MUTATE] Mutation saved to {mutation_path}")
 
-    print("[VALIDATE] Starting validation phase...")
+    # VALIDATE
+    print("\n[VALIDATE] Starting validation phase...")
     validator = Validator()
     if validator.validate(mutation_path, target_file):
-        print("[VALIDATE] Mutation passed validation.")
+        print("[VALIDATE] Mutation passed validation and smoke tests.")
         
-        print("[REBUILD] Starting rebuild phase (Hot-swap)...")
-        # Apply mutation
+        # REBUILD
+        print("\n[REBUILD] Starting rebuild phase (Hot-swap)...")
+        # Apply mutation to the main source tree
         with open(target_file, 'w') as f:
             f.write(mutated_code)
         
         rebuilder = Rebuilder()
         if rebuilder.rebuild():
-            print("[REBUILD] System rebuilt. Reloading module...")
+            print("[REBUILD] System rebuilt successfully.")
+            
+            # Reload the module
             global wraith_core
             wraith_core = rebuilder.reload_module('wraith_core')
-            print("[REBUILD] System hot-swapped successfully.")
-            return True
+            if wraith_core:
+                print("[REBUILD] System hot-swapped successfully.")
+                return True
+            else:
+                print("[REBUILD] Failed to reload module.")
+                return False
         else:
             print("[REBUILD] Rebuild failed.")
             return False
@@ -85,6 +102,7 @@ def main():
     print(f"Tasks scheduled: {len(tasks)}")
     print("---------------------------------------")
     
+    # 1. Initial execution (Performance Baseline)
     start_time = time.time()
     
     with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
@@ -105,14 +123,24 @@ def main():
     print("---------------------------------------")
     print(f"All tasks completed in {execution_time:.2f} seconds.")
     
-    # AUDIT
+    # 2. AUDIT
     performance_signals = audit(execution_time, len(tasks))
     
-    # MUTATE -> VALIDATE -> REBUILD
+    # 3. MUTATE -> VALIDATE -> REBUILD
     if run_mutation_cycle(performance_signals):
-        print("=== Mutation Cycle Complete ===")
+        print("\n=== Mutation Cycle Complete: System Evolved ===")
+        
+        # 4. Optional: Run again to show performance change
+        print("\n[POST-MUTATION] Running tasks again with evolved core...")
+        start_time = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+            futures = [executor.submit(nodes[i % len(nodes)].run_task, task) for i, task in enumerate(tasks)]
+            concurrent.futures.wait(futures)
+        execution_time = time.time() - start_time
+        print(f"[POST-MUTATION] Tasks completed in {execution_time:.2f} seconds.")
+        audit(execution_time, len(tasks))
     else:
-        print("=== Mutation Cycle Failed or Skipped ===")
+        print("\n=== Mutation Cycle Failed or Skipped ===")
 
 if __name__ == "__main__":
     main()
