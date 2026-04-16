@@ -8,16 +8,24 @@ class Mutator:
         self.model = model
         self.ollama_url = "http://localhost:11434/api/generate"
 
-    def mutate(self, file_path, performance_signals):
+    def mutate(self, file_path, performance_signals, fragments=None):
         """
-        Interacts with local Ollama to generate C++ code improvements based on 'performance signals'.
+        Interacts with local Ollama to generate C++ code improvements based on 'performance signals'
+        and past successful 'fragments' from the Knowledge Base.
         """
         with open(file_path, 'r') as f:
             original_code = f.read()
 
+        knowledge_context = ""
+        if fragments:
+            knowledge_context = "\nPast Successful Strategies:\n"
+            for i, f in enumerate(fragments):
+                knowledge_context += f"- {f['insight']}\n"
+
         prompt = f"""
         Objective: Optimize the following C++ code for better performance.
         Performance Signals: {performance_signals}
+        {knowledge_context}
         
         Original Code:
         ```cpp
@@ -27,7 +35,8 @@ class Mutator:
         Instruction: 
         1. Identify bottlenecks based on signals.
         2. Apply optimizations (e.g., reduce allocations, use more efficient algorithms, etc.).
-        3. Return ONLY the improved C++ code within a single markdown code block.
+        3. Leverage past successful strategies if applicable.
+        4. Return ONLY the improved C++ code within a single markdown code block.
         """
 
         payload = {
