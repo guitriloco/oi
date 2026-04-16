@@ -1,0 +1,18 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "oi"
+version = "0.1.0"
+description = "Supra-Codex Engine scaffold"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+]
+
+[tool.scikit-build]
+cmake.version = ">=3.15"
+ninja.version = ">=1.5"
+python.version = "3"
