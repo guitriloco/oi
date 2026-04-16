@@ -3,11 +3,14 @@ import time
 import random
 import sys
 import os
+import threading
+import requests
 
 from pipeline.mutator import Mutator
 from pipeline.distiller import Distiller
 from integrity.validator import Validator
 from orchestration.rebuilder import Rebuilder
+from orchestration.sovereignty_api import start_api
 from models.knowledge_base import KnowledgeBase
 
 # Initial attempt to load the core module
@@ -36,6 +39,33 @@ class Node:
         else:
             result = f"[Node-{self.node_id} (Mock)] Processed: {task_data}"
         return result
+
+class RemoteNode(Node):
+    def __init__(self, node_id, master_url="http://localhost:8000"):
+        super().__init__(node_id)
+        self.master_url = master_url
+
+    def run_task(self, task_data):
+        try:
+            # Dispatch task via API
+            resp = requests.post(f"{self.master_url}/tasks", params={"node_id": self.node_id}, json=task_data)
+            resp.raise_for_status()
+            task_id = resp.json()["task_id"]
+
+            # Poll for result
+            timeout = 10
+            start_poll = time.time()
+            while time.time() - start_poll < timeout:
+                try:
+                    res_resp = requests.get(f"{self.master_url}/results/{task_id}")
+                    if res_resp.status_code == 200:
+                        return res_resp.json()["result"]
+                except:
+                    pass
+                time.sleep(0.5)
+            return f"[RemoteNode-{self.node_id}] Error: Task timed out"
+        except Exception as e:
+            return f"[RemoteNode-{self.node_id}] Error: {e}"
 
 def audit(execution_time, task_count):
     """
@@ -101,22 +131,42 @@ def run_mutation_cycle(performance_signals, kb):
         print("[VALIDATE] Mutation failed validation.")
         return None, None
 
+def get_remote_nodes(master_url="http://localhost:8000"):
+    try:
+        resp = requests.get(f"{master_url}/nodes")
+        if resp.status_code == 200:
+            return [RemoteNode(node["node_id"], master_url) for node in resp.json()]
+    except:
+        pass
+    return []
+
 def main():
-    nodes = [Node(i) for i in range(1, 4)]
+    # Start Sovereignty API in a background thread
+    api_thread = threading.Thread(target=start_api, kwargs={"port": 8000}, daemon=True)
+    api_thread.start()
+    print("[*] Sovereignty API started on port 8000.")
+    time.sleep(1) # Give it a second to start
+
+    local_nodes = [Node(i) for i in range(1, 4)]
     tasks = [f"Payload-{i}" for i in range(20)]
     
     kb = KnowledgeBase()
     distiller = Distiller()
 
-    print("=== Supra-Codex Master Orchestrator ===")
-    print(f"Nodes initialized: {len(nodes)}")
+    print("=== Supra-Codex Master Orchestrator (Cluster Sovereign) ===")
+    
+    # Check for remote nodes
+    remote_nodes = get_remote_nodes()
+    nodes = local_nodes + remote_nodes
+    
+    print(f"Nodes initialized: {len(nodes)} ({len(local_nodes)} local, {len(remote_nodes)} remote)")
     print(f"Tasks scheduled: {len(tasks)}")
     print("---------------------------------------")
     
     # 1. Initial execution (Performance Baseline)
     start_time = time.time()
     
-    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(nodes)) as executor:
         futures = []
         for i, task in enumerate(tasks):
             node = nodes[i % len(nodes)]
@@ -140,6 +190,11 @@ def main():
     for cycle in range(1, 3):
         print(f"\n=== EVOLUTION CYCLE {cycle} ===")
         
+        # Refresh remote nodes at the start of each cycle
+        remote_nodes = get_remote_nodes()
+        nodes = local_nodes + remote_nodes
+        print(f"Active Cluster: {len(nodes)} nodes ({len(local_nodes)} local, {len(remote_nodes)} remote)")
+
         # 3. MUTATE -> VALIDATE -> REBUILD
         original_code, mutated_code = run_mutation_cycle(performance_signals, kb)
         
@@ -149,7 +204,7 @@ def main():
             # 4. Run again to show performance change and DISTILL
             print(f"\n[POST-MUTATION] Running tasks again with evolved core (Cycle {cycle})...")
             start_time = time.time()
-            with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=len(nodes)) as executor:
                 futures = [executor.submit(nodes[i % len(nodes)].run_task, task) for i, task in enumerate(tasks)]
                 concurrent.futures.wait(futures)
             execution_time = time.time() - start_time
@@ -162,6 +217,17 @@ def main():
             if fragment:
                 kb.add_fragment(fragment)
                 print(f"[DISTILL] Knowledge fragment added: {fragment['insight']}")
+                
+                # Propagate Knowledge Fragment to the Cluster via API
+                try:
+                    requests.post("http://localhost:8000/fragments", json={
+                        "fragment_id": f"frag-{int(time.time())}",
+                        "content": mutated_code,
+                        "metadata": fragment
+                    })
+                    print("[DISTILL] Fragment propagated to cluster sovereignty API.")
+                except Exception as e:
+                    print(f"[DISTILL] Failed to propagate fragment: {e}")
             else:
                 print("[DISTILL] No significant knowledge gained from this cycle.")
             
