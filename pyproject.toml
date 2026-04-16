@@ -1,0 +1,18 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "wraith_core"
+version = "0.1.0"
+description = "Supra-Codex Engine Core"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+    { name = "Supra-Codex Team" },
+]
+
+[tool.scikit-build]
+cmake.version = ">=3.15"
+ninja.version = ">=1.5"
+python.version = "3"
