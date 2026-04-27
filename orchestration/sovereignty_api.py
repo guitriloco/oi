@@ -3,16 +3,29 @@ from pydantic import BaseModel
 from typing import Dict, List, Any, Optional
 import uuid
 import time
+import sys
+import os
 
+# Add projets to path for sovereign_essence
+sys.path.append("/home/agent-engineer/projets")
+try:
+    from sovereign_essence import nexus_v5, engine, SovereignV5
+except ImportError:
+    print("Warning: sovereign_essence not found. Some endpoints will be limited.")
+    nexus_v5 = None
+    engine = None
+    SovereignV5 = None
+
+from telemetry.soup_bridge import bridge as telemetry_bridge
 from models.cluster_state import ClusterNode, ClusterState
 
-app = FastAPI(title="Supra-Codex Sovereignty API")
+app = FastAPI(title="Sovereign Line Unified API")
 
 # Global state
 cluster_state = ClusterState()
-task_queue: Dict[str, List[Dict[str, Any]]] = {}  # node_id -> list of tasks
-task_results: Dict[str, Dict[str, Any]] = {}      # task_id -> result
-knowledge_fragments: Dict[str, Dict[str, Any]] = {} # fragment_id -> fragment
+task_queue: Dict[str, List[Dict[str, Any]]] = {}
+task_results: Dict[str, Dict[str, Any]] = {}
+knowledge_fragments: Dict[str, Dict[str, Any]] = {}
 
 class RegistrationRequest(BaseModel):
     node_id: str
@@ -20,9 +33,10 @@ class RegistrationRequest(BaseModel):
     ip: str
     capabilities: Dict[str, str]
 
-class TaskAssignment(BaseModel):
-    task_id: str
-    payload: Any
+class TelemetryLog(BaseModel):
+    name: str
+    rating: int
+    notes: str
 
 class TaskResult(BaseModel):
     task_id: str
@@ -49,6 +63,34 @@ async def register_node(req: RegistrationRequest):
     if node.node_id not in task_queue:
         task_queue[node.node_id] = []
     return {"status": "registered", "node_id": node.node_id}
+
+@app.post("/telemetry")
+async def log_telemetry(log: TelemetryLog):
+    if telemetry_bridge:
+        telemetry_bridge.log_telemetry(
+            entry_id=int(time.time()) % 10000,
+            name=log.name,
+            rating=log.rating,
+            date=time.strftime("%Y-%m-%d"),
+            notes=log.notes
+        )
+        return {"status": "telemetry_logged"}
+    else:
+        return {"status": "telemetry_bridge_unavailable"}
+
+@app.post("/nectar/predict")
+async def predict_nectar(objective: str):
+    if nexus_v5:
+        prediction = await nexus_v5.predict_and_serve(objective)
+        return {"objective": objective, "prediction": prediction}
+    raise HTTPException(status_code=503, detail="Nexus Evolution engine unavailable")
+
+@app.post("/nectar/distill")
+async def distill_nectar(state: str):
+    if engine:
+        result = engine.execute(state)
+        return {"input": state, "result": result}
+    raise HTTPException(status_code=503, detail="Hyper Recursive Engine unavailable")
 
 @app.get("/nodes")
 async def get_nodes():
