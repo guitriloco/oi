@@ -64,8 +64,23 @@ async def register_node(req: RegistrationRequest):
         task_queue[node.node_id] = []
     return {"status": "registered", "node_id": node.node_id}
 
+import httpx
+
+# Node configurations
+NOV_URL = "http://localhost:8001"
+YES_URL = "http://localhost:8002"
+VVV_URL = "http://localhost:8003"
+
 @app.post("/telemetry")
 async def log_telemetry(log: TelemetryLog):
+    telemetry_data = {
+        "name": log.name,
+        "rating": log.rating,
+        "notes": log.notes,
+        "timestamp": time.time()
+    }
+    
+    # 1. Log to local binary storage via bridge
     if telemetry_bridge:
         telemetry_bridge.log_telemetry(
             entry_id=int(time.time()) % 10000,
@@ -74,9 +89,33 @@ async def log_telemetry(log: TelemetryLog):
             date=time.strftime("%Y-%m-%d"),
             notes=log.notes
         )
-        return {"status": "telemetry_logged"}
-    else:
-        return {"status": "telemetry_bridge_unavailable"}
+    
+    # 2. Forward to NOV Observer
+    async with httpx.AsyncClient() as client:
+        try:
+            await client.post(f"{NOV_URL}/observe", json=telemetry_data)
+        except Exception as e:
+            print(f"Warning: Failed to forward telemetry to NOV: {e}")
+            
+    return {"status": "telemetry_logged_and_observed"}
+
+@app.post("/conquer/execute")
+async def conquer_execute(objective: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{YES_URL}/execute", params={"objective": objective})
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"YES engine unavailable: {e}")
+
+@app.post("/vault/preserve")
+async def vault_preserve(content: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{VVV_URL}/vault/store", params={"content": content})
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"VVV vault unavailable: {e}")
 
 @app.post("/nectar/predict")
 async def predict_nectar(objective: str):
