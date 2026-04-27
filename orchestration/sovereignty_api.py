@@ -27,6 +27,8 @@ task_queue: Dict[str, List[Dict[str, Any]]] = {}
 task_results: Dict[str, Dict[str, Any]] = {}
 knowledge_fragments: Dict[str, Dict[str, Any]] = {}
 zenith_signals: List[Dict[str, Any]] = []
+telemetry_history: List[Dict[str, Any]] = []
+nov_observations: List[Dict[str, Any]] = []
 
 class RegistrationRequest(BaseModel):
     node_id: str
@@ -91,14 +93,31 @@ async def log_telemetry(log: TelemetryLog):
             notes=log.notes
         )
     
-    # 2. Forward to NOV Observer
+    # 2. Append to history for dashboard
+    telemetry_history.append(telemetry_data)
+    if len(telemetry_history) > 100:
+        telemetry_history.pop(0)
+    
+    # 3. Forward to NOV Observer
     async with httpx.AsyncClient() as client:
         try:
-            await client.post(f"{NOV_URL}/observe", json=telemetry_data)
+            resp = await client.post(f"{NOV_URL}/observe", json=telemetry_data)
+            if resp.status_code == 200:
+                nov_observations.append(resp.json())
+                if len(nov_observations) > 100:
+                    nov_observations.pop(0)
         except Exception as e:
             print(f"Warning: Failed to forward telemetry to NOV: {e}")
             
     return {"status": "telemetry_logged_and_observed"}
+
+@app.get("/telemetry/recent")
+async def get_recent_telemetry():
+    return telemetry_history
+
+@app.get("/nov/observations")
+async def get_nov_observations():
+    return nov_observations
 
 @app.post("/conquer/execute")
 async def conquer_execute(objective: str):
