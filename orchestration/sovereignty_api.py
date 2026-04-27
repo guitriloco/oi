@@ -26,6 +26,7 @@ cluster_state = ClusterState()
 task_queue: Dict[str, List[Dict[str, Any]]] = {}
 task_results: Dict[str, Dict[str, Any]] = {}
 knowledge_fragments: Dict[str, Dict[str, Any]] = {}
+zenith_signals: List[Dict[str, Any]] = []
 
 class RegistrationRequest(BaseModel):
     node_id: str
@@ -130,6 +131,30 @@ async def distill_nectar(state: str):
         result = engine.execute(state)
         return {"input": state, "result": result}
     raise HTTPException(status_code=503, detail="Hyper Recursive Engine unavailable")
+
+@app.post("/zenith/ingest")
+async def zenith_ingest(fragment: Fragment):
+    knowledge_fragments[fragment.fragment_id] = {
+        "content": fragment.content,
+        "metadata": fragment.metadata,
+        "timestamp": time.time(),
+        "source": "ZENITH"
+    }
+    # Also add to the knowledge base if possible
+    # (Assuming we have a way to persist it, or just let the master orchestrator handle it)
+    return {"status": "zenith_fragment_ingested", "id": fragment.fragment_id}
+
+@app.post("/zenith/signal")
+async def receive_zenith_signal(signal: Dict[str, Any]):
+    zenith_signals.append({**signal, "timestamp": time.time()})
+    return {"status": "zenith_signal_received"}
+
+@app.get("/zenith/signals")
+async def get_zenith_signals():
+    global zenith_signals
+    signals = zenith_signals[:]
+    zenith_signals = [] # Clear after reading
+    return signals
 
 @app.get("/nodes")
 async def get_nodes():

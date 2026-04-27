@@ -90,6 +90,17 @@ def run_mutation_cycle(performance_signals, kb):
     # Get recent knowledge fragments to inform mutation
     fragments = kb.get_all_fragments(limit=3)
     
+    # Check for Zenith signals via API
+    try:
+        resp = requests.get("http://localhost:8000/zenith/signals")
+        if resp.status_code == 200:
+            zenith_data = resp.json()
+            if zenith_data:
+                print(f"[MUTATE] Incorporating {len(zenith_data)} signals from ZENITH data stream.")
+                performance_signals["zenith_insights"] = zenith_data
+    except Exception as e:
+        print(f"[MUTATE] Warning: Could not pull Zenith signals: {e}")
+
     # MUTATE
     mutated_code = mutator.mutate(target_file, performance_signals, fragments=fragments)
     if not mutated_code:
