@@ -3,16 +3,30 @@ from pydantic import BaseModel
 from typing import Dict, List, Any, Optional
 import uuid
 import time
+import sys
+import os
 
+# Add projets to path for sovereign_essence
+sys.path.append("/home/agent-engineer/projets")
+try:
+    from sovereign_essence import nexus_v5, engine, SovereignV5
+except ImportError:
+    print("Warning: sovereign_essence not found. Some endpoints will be limited.")
+    nexus_v5 = None
+    engine = None
+    SovereignV5 = None
+
+from telemetry.soup_bridge import bridge as telemetry_bridge
 from models.cluster_state import ClusterNode, ClusterState
 
-app = FastAPI(title="Supra-Codex Sovereignty API")
+app = FastAPI(title="Sovereign Line Unified API")
 
 # Global state
 cluster_state = ClusterState()
-task_queue: Dict[str, List[Dict[str, Any]]] = {}  # node_id -> list of tasks
-task_results: Dict[str, Dict[str, Any]] = {}      # task_id -> result
-knowledge_fragments: Dict[str, Dict[str, Any]] = {} # fragment_id -> fragment
+task_queue: Dict[str, List[Dict[str, Any]]] = {}
+task_results: Dict[str, Dict[str, Any]] = {}
+knowledge_fragments: Dict[str, Dict[str, Any]] = {}
+zenith_signals: List[Dict[str, Any]] = []
 
 class RegistrationRequest(BaseModel):
     node_id: str
@@ -20,9 +34,10 @@ class RegistrationRequest(BaseModel):
     ip: str
     capabilities: Dict[str, str]
 
-class TaskAssignment(BaseModel):
-    task_id: str
-    payload: Any
+class TelemetryLog(BaseModel):
+    name: str
+    rating: int
+    notes: str
 
 class TaskResult(BaseModel):
     task_id: str
@@ -49,6 +64,97 @@ async def register_node(req: RegistrationRequest):
     if node.node_id not in task_queue:
         task_queue[node.node_id] = []
     return {"status": "registered", "node_id": node.node_id}
+
+import httpx
+
+# Node configurations
+NOV_URL = "http://localhost:8001"
+YES_URL = "http://localhost:8002"
+VVV_URL = "http://localhost:8003"
+
+@app.post("/telemetry")
+async def log_telemetry(log: TelemetryLog):
+    telemetry_data = {
+        "name": log.name,
+        "rating": log.rating,
+        "notes": log.notes,
+        "timestamp": time.time()
+    }
+    
+    # 1. Log to local binary storage via bridge
+    if telemetry_bridge:
+        telemetry_bridge.log_telemetry(
+            entry_id=int(time.time()) % 10000,
+            name=log.name,
+            rating=log.rating,
+            date=time.strftime("%Y-%m-%d"),
+            notes=log.notes
+        )
+    
+    # 2. Forward to NOV Observer
+    async with httpx.AsyncClient() as client:
+        try:
+            await client.post(f"{NOV_URL}/observe", json=telemetry_data)
+        except Exception as e:
+            print(f"Warning: Failed to forward telemetry to NOV: {e}")
+            
+    return {"status": "telemetry_logged_and_observed"}
+
+@app.post("/conquer/execute")
+async def conquer_execute(objective: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{YES_URL}/execute", params={"objective": objective})
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"YES engine unavailable: {e}")
+
+@app.post("/vault/preserve")
+async def vault_preserve(content: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{VVV_URL}/vault/store", params={"content": content})
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"VVV vault unavailable: {e}")
+
+@app.post("/nectar/predict")
+async def predict_nectar(objective: str):
+    if nexus_v5:
+        prediction = await nexus_v5.predict_and_serve(objective)
+        return {"objective": objective, "prediction": prediction}
+    raise HTTPException(status_code=503, detail="Nexus Evolution engine unavailable")
+
+@app.post("/nectar/distill")
+async def distill_nectar(state: str):
+    if engine:
+        result = engine.execute(state)
+        return {"input": state, "result": result}
+    raise HTTPException(status_code=503, detail="Hyper Recursive Engine unavailable")
+
+@app.post("/zenith/ingest")
+async def zenith_ingest(fragment: Fragment):
+    knowledge_fragments[fragment.fragment_id] = {
+        "content": fragment.content,
+        "metadata": fragment.metadata,
+        "timestamp": time.time(),
+        "source": "ZENITH"
+    }
+    # Also add to the knowledge base if possible
+    # (Assuming we have a way to persist it, or just let the master orchestrator handle it)
+    return {"status": "zenith_fragment_ingested", "id": fragment.fragment_id}
+
+@app.post("/zenith/signal")
+async def receive_zenith_signal(signal: Dict[str, Any]):
+    zenith_signals.append({**signal, "timestamp": time.time()})
+    return {"status": "zenith_signal_received"}
+
+@app.get("/zenith/signals")
+async def get_zenith_signals():
+    global zenith_signals
+    signals = zenith_signals[:]
+    zenith_signals = [] # Clear after reading
+    return signals
 
 @app.get("/nodes")
 async def get_nodes():

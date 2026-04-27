@@ -20,12 +20,19 @@ class Mutator:
         if fragments:
             knowledge_context = "\nPast Successful Strategies:\n"
             for i, f in enumerate(fragments):
-                knowledge_context += f"- {f['insight']}\n"
+                knowledge_context += f"- {f.get('insight', 'N/A')}\n"
+
+        zenith_context = ""
+        if isinstance(performance_signals, dict) and "zenith_insights" in performance_signals:
+            zenith_context = "\nZenith Data Mesh Signals:\n"
+            for s in performance_signals["zenith_insights"]:
+                zenith_context += f"- {s.get('insight', 'N/A')} (Metric: {s.get('efficiency_metric', 'N/A')})\n"
 
         prompt = f"""
         Objective: Optimize the following C++ code for better performance.
         Performance Signals: {performance_signals}
         {knowledge_context}
+        {zenith_context}
         
         Original Code:
         ```cpp
