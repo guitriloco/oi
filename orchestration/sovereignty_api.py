@@ -10,11 +10,13 @@ import os
 sys.path.append("/home/agent-engineer/projets")
 try:
     from sovereign_essence import nexus_v5, engine, SovereignV5
+    from Mirror_Protocol.registry import registry as expansion_registry
 except ImportError:
-    print("Warning: sovereign_essence not found. Some endpoints will be limited.")
+    print("Warning: sovereign_essence or Mirror_Protocol not found. Some endpoints will be limited.")
     nexus_v5 = None
     engine = None
     SovereignV5 = None
+    expansion_registry = None
 
 from telemetry.soup_bridge import bridge as telemetry_bridge
 from models.cluster_state import ClusterNode, ClusterState
@@ -136,6 +138,37 @@ async def vault_preserve(content: str):
             return resp.json()
         except Exception as e:
             raise HTTPException(status_code=503, detail=f"VVV vault unavailable: {e}")
+
+@app.post("/refinement/trigger")
+async def trigger_refinement(payload: Dict[str, Any]):
+    print(f"[API] REFINEMENT TRIGGERED: {payload.get('reason')}")
+    
+    # 1. Broadcast to all expansion nodes that a refinement protocol is starting
+    if expansion_registry:
+        await expansion_registry.broadcast("PROTOCOL_START", payload)
+    
+    # 2. Simulate a successful refinement (In Phase 4.2 this would trigger run_mutation_cycle)
+    refinement_result = {
+        "status": "SUCCESS",
+        "refined_logic": f"Optimized logic based on {payload.get('reason')}",
+        "nectar_yield": 0.98,
+        "Pure_Gold": "Absolute_Nectar_V1" if payload.get("is_anomaly") or payload.get("data", {}).get("rating", 5) < 3 else "Standard_Nectar",
+        "timestamp": time.time()
+    }
+    
+    # 3. Broadcast completion to callbacks (Yes, vvv)
+    if expansion_registry:
+        await expansion_registry.broadcast("PROTOCOL_COMPLETE", refinement_result)
+    
+    return {"status": "refinement_executed", "result": refinement_result}
+
+@app.on_event("startup")
+async def startup_event():
+    # Register expansion node callbacks in the Mirror Protocol Registry
+    if expansion_registry:
+        expansion_registry.register_remote("PROTOCOL_COMPLETE", f"{YES_URL}/protocol/callback")
+        expansion_registry.register_remote("PROTOCOL_COMPLETE", f"{VVV_URL}/protocol/callback")
+        print("[API] Expansion nodes registered with Mirror Protocol Registry.")
 
 @app.post("/nectar/predict")
 async def predict_nectar(objective: str):
