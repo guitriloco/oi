@@ -172,11 +172,15 @@ async def ascend_mutate(target_node: str):
 async def trigger_refinement(payload: Dict[str, Any]):
     print(f"[API] REFINEMENT TRIGGERED: {payload.get('reason')}")
     
-    # 1. Broadcast to all expansion nodes that a refinement protocol is starting
+    # 1. Broadcast ANOMALY_DETECTED if it's an anomaly
+    if payload.get("is_anomaly") and expansion_registry:
+        await expansion_registry.broadcast("ANOMALY_DETECTED", payload)
+    
+    # 2. Broadcast to all expansion nodes that a refinement protocol is starting
     if expansion_registry:
         await expansion_registry.broadcast("PROTOCOL_START", payload)
     
-    # 2. Simulate a successful refinement (In Phase 4.2 this would trigger run_mutation_cycle)
+    # 3. Simulate a successful refinement (In Phase 4.2 this would trigger run_mutation_cycle)
     refinement_result = {
         "status": "SUCCESS",
         "refined_logic": f"Optimized logic based on {payload.get('reason')}",
@@ -185,7 +189,7 @@ async def trigger_refinement(payload: Dict[str, Any]):
         "timestamp": time.time()
     }
     
-    # 3. Broadcast completion to callbacks (Yes, vvv)
+    # 4. Broadcast completion to callbacks (Yes, vvv)
     if expansion_registry:
         await expansion_registry.broadcast("PROTOCOL_COMPLETE", refinement_result)
     
