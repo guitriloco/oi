@@ -8,6 +8,7 @@ import os
 
 # Add projets to path for sovereign_essence
 sys.path.append("/home/agent-engineer/projets")
+sys.path.append("/home/agent-engineer/oi")
 try:
     from sovereign_essence import nexus_v5, engine, SovereignV5
     from Mirror_Protocol.registry import registry as expansion_registry
@@ -17,6 +18,8 @@ except ImportError:
     engine = None
     SovereignV5 = None
     expansion_registry = None
+
+from orchestration.forge.aether_sync_bridge import bridge as aether_bridge
 
 from telemetry.soup_bridge import bridge as telemetry_bridge
 from models.cluster_state import ClusterNode, ClusterState
@@ -194,6 +197,15 @@ async def trigger_refinement(payload: Dict[str, Any]):
         await expansion_registry.broadcast("PROTOCOL_COMPLETE", refinement_result)
     
     return {"status": "refinement_executed", "result": refinement_result}
+
+@app.post("/omni-pulse/sync")
+async def omni_pulse_sync(seed_objective: str):
+    """
+    Triggers the Sovereign Omni-Pulse via the Aether-Sync Bridge.
+    """
+    if aether_bridge:
+        return await aether_bridge.execute_omni_pulse(seed_objective)
+    raise HTTPException(status_code=503, detail="Aether-Sync Bridge unavailable")
 
 @app.on_event("startup")
 async def startup_event():
