@@ -75,6 +75,8 @@ import httpx
 NOV_URL = "http://localhost:8001"
 YES_URL = "http://localhost:8002"
 VVV_URL = "http://localhost:8003"
+REX_URL = "http://localhost:8004"
+SUPRA_URL = "http://localhost:8005"
 
 @app.post("/telemetry")
 async def log_telemetry(log: TelemetryLog):
@@ -139,6 +141,33 @@ async def vault_preserve(content: str):
         except Exception as e:
             raise HTTPException(status_code=503, detail=f"VVV vault unavailable: {e}")
 
+@app.post("/siphon/start")
+async def siphon_start(target: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{REX_URL}/siphon/start", params={"target": target})
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"REX siphon unavailable: {e}")
+
+@app.post("/ascend/fuse")
+async def ascend_fuse(models: List[str]):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{SUPRA_URL}/ascend/fuse", json=models)
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"SUPRA fusion unavailable: {e}")
+
+@app.post("/ascend/mutate")
+async def ascend_mutate(target_node: str):
+    async with httpx.AsyncClient() as client:
+        try:
+            resp = await client.post(f"{SUPRA_URL}/ascend/mutate", params={"target_node": target_node})
+            return resp.json()
+        except Exception as e:
+            raise HTTPException(status_code=503, detail=f"SUPRA mutation unavailable: {e}")
+
 @app.post("/refinement/trigger")
 async def trigger_refinement(payload: Dict[str, Any]):
     print(f"[API] REFINEMENT TRIGGERED: {payload.get('reason')}")
@@ -168,6 +197,8 @@ async def startup_event():
     if expansion_registry:
         expansion_registry.register_remote("PROTOCOL_COMPLETE", f"{YES_URL}/protocol/callback")
         expansion_registry.register_remote("PROTOCOL_COMPLETE", f"{VVV_URL}/protocol/callback")
+        expansion_registry.register_remote("PROTOCOL_START", f"{REX_URL}/protocol/callback")
+        expansion_registry.register_remote("ANOMALY_DETECTED", f"{SUPRA_URL}/protocol/callback")
         print("[API] Expansion nodes registered with Mirror Protocol Registry.")
 
 @app.post("/nectar/predict")
@@ -274,3 +305,4 @@ async def list_fragments():
 def start_api(host: str = "0.0.0.0", port: int = 8000):
     import uvicorn
     uvicorn.run(app, host=host, port=port)
+if __name__ == "__main__": start_api()
