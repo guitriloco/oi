@@ -219,6 +219,20 @@ async def get_fragment(fragment_id: str):
 async def list_fragments():
     return list(knowledge_fragments.keys())
 
+yield_history: List[Dict[str, Any]] = []
+
+@app.post("/yield/report")
+async def report_yield(report: Dict[str, Any]):
+    yield_history.append({**report, "timestamp": time.time()})
+    # Keep only last 100 reports
+    if len(yield_history) > 100:
+        yield_history.pop(0)
+    return {"status": "yield_reported"}
+
+@app.get("/yield/history")
+async def get_yield_history():
+    return yield_history
+
 def start_api(host: str = "0.0.0.0", port: int = 8000):
     import uvicorn
     uvicorn.run(app, host=host, port=port)
