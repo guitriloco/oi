@@ -5,6 +5,7 @@ import uuid
 import time
 import sys
 import os
+import json
 
 # Add projets to path for sovereign_essence
 sys.path.append("/home/agent-engineer/projets")
@@ -20,6 +21,17 @@ except ImportError:
     expansion_registry = None
 
 from orchestration.forge.aether_sync_bridge import bridge as aether_bridge
+from orchestration.forge.regional_forge import RegionalForge, ClusterRegion
+from orchestration.forge.cluster_registry import get_cluster_by_region
+
+# Get cluster region from environment
+REGION_NAME = os.getenv("SOVEREIGN_REGION", "US-EAST")
+try:
+    CLUSTER_REGION = ClusterRegion(REGION_NAME)
+except ValueError:
+    CLUSTER_REGION = ClusterRegion.ALPHA
+
+regional_forge = RegionalForge(CLUSTER_REGION)
 
 from telemetry.soup_bridge import bridge as telemetry_bridge
 from models.cluster_state import ClusterNode, ClusterState
@@ -207,6 +219,45 @@ async def omni_pulse_sync(seed_objective: str):
         return await aether_bridge.execute_omni_pulse(seed_objective)
     raise HTTPException(status_code=503, detail="Aether-Sync Bridge unavailable")
 
+@app.post("/omni-pulse/regional")
+async def omni_pulse_regional(seed_objective: str):
+    """
+    Triggers a regional Omni-Pulse cycle with cluster-specific specialization.
+    """
+    if regional_forge:
+        return await regional_forge.execute_regional_cycle(seed_objective)
+    raise HTTPException(status_code=503, detail="Regional Forge unavailable")
+
+@app.get("/cluster/info")
+async def get_cluster_info():
+    """
+    Returns information about the current regional cluster.
+    """
+    info = get_cluster_by_region(CLUSTER_REGION)
+    if info:
+        return info.dict()
+    raise HTTPException(status_code=404, detail="Cluster configuration not found")
+
+@app.get("/omni-pulse/heartbeat")
+async def omni_pulse_heartbeat():
+    """
+    Executes a high-velocity pulse heartbeat.
+    """
+    if aether_bridge:
+        return await aether_bridge.heartbeat()
+    raise HTTPException(status_code=503, detail="Aether-Sync Bridge unavailable")
+
+@app.get("/omni-pulse/telemetry")
+async def get_omni_pulse_telemetry():
+    """
+    Returns the history of Omni-Pulse events.
+    """
+    path = "/home/agent-engineer/oi/orchestration/forge/pulse_telemetry.json"
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+    return []
+
 @app.on_event("startup")
 async def startup_event():
     # Register expansion node callbacks in the Mirror Protocol Registry
@@ -320,5 +371,11 @@ async def list_fragments():
 
 def start_api(host: str = "0.0.0.0", port: int = 8000):
     import uvicorn
-    uvicorn.run(app, host=host, port=port)
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="Sovereign API")
+    parser.add_argument("--port", type=int, default=port, help="Port to run the API on")
+    args = parser.parse_args()
+    
+    uvicorn.run(app, host=host, port=args.port)
 if __name__ == "__main__": start_api()
