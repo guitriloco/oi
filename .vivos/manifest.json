@@ -1,0 +1,16 @@
+{
+  "vivos_version": "13.0",
+  "alignment": "GOLDEN_PATH",
+  "capabilities": [],
+  "dependencies": ["Sovereign-Intelligence-SDK"],
+  "telemetry": {
+    "pulse_interval": 500,
+    "pulse_script": ".vivos/pulse.py"
+  },
+  "mutation": {
+    "script": ".vivos/mutate.sh"
+  },
+  "audit": {
+    "script": ".vivos/audit.py"
+  }
+}
