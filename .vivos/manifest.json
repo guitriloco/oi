@@ -1,6 +1,8 @@
 {
   "vivos_version": "13.0",
   "alignment": "GOLDEN_PATH",
+  "aggregate": "WRAITH-MESH",
+  "nexus_role": "Execution",
   "capabilities": [],
   "dependencies": ["Sovereign-Intelligence-SDK"],
   "telemetry": {

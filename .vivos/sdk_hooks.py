@@ -1,12 +1,15 @@
-# VIVOS SDK Interlace Hooks
-try:
-    import sovereign_sdk as sdk
-except ImportError:
-    sdk = None
+import sys
+import os
 
-def interlace_with_sdk(payload):
-    if sdk:
-        return sdk.process(payload)
-    else:
-        print("[VIVOS] SDK not found. Queuing payload for sync.")
-        return payload
+# Ensure the SDK path is available
+SDK_PATH = os.path.expanduser("~/Sovereign-Intelligence-SDK")
+if SDK_PATH not in sys.path:
+    sys.path.append(SDK_PATH)
+
+def call_brain(action, data):
+    print(f"[VIVOS] Routing action '{action}' to Sovereign-Brain...")
+    # Simulated SDK call
+    return {"status": "SUCCESS", "response": f"Brain processed {action}"}
+
+if __name__ == "__main__":
+    print(call_brain("SELF_AUDIT", {"path": "."}))
