@@ -2,8 +2,11 @@ import os
 import json
 import sys
 
-def run_recursive_audit():
-    print(f"[VIVOS-V13.0] Starting Recursive Audit for {os.getcwd()}")
+# WRAITH-MESH members
+EXPECTED_MEMBERS = ['oi', 'olocoo', 'Auto', 'Mutante-Apex-Functions']
+
+def run_wraith_mesh_audit():
+    print(f"[WRAITH-MESH-V13.0] Starting Recursive Fusion Audit for {os.getcwd()}")
     
     # 1. Local Compliance Check
     manifest_path = ".vivos/manifest.json"
@@ -18,47 +21,40 @@ def run_recursive_audit():
         print(f"[!] ERROR: Failed to parse manifest: {e}")
         return False
         
-    print(f"[+] Local Manifest Verified: Aggregate={manifest.get('aggregate')}")
+    if manifest.get('aggregate') != "WRAITH-MESH":
+        print(f"[!] ERROR: Repository not part of WRAITH-MESH aggregate (Current: {manifest.get('aggregate')})")
+        return False
 
-    # 2. Peer Discovery (Recursive Logic)
-    # Scan the shared home directory for sibling repositories
+    print(f"[+] Local Manifest Verified: Role={manifest.get('nexus_role')}")
+
+    # 2. Wraith-Mesh Fusion Check (Peer Discovery)
     workspace_root = os.path.expanduser("~")
-    print(f"[+] Scanning Workspace for Peer Nodes in {workspace_root}...")
+    discovered_members = []
     
-    peers = []
-    try:
-        for entry in os.listdir(workspace_root):
-            peer_path = os.path.join(workspace_root, entry)
-            if os.path.isdir(peer_path) and os.path.exists(os.path.join(peer_path, ".vivos/manifest.json")):
-                peers.append(entry)
-    except Exception as e:
-        print(f"[!] Scan Warning: {e}")
-            
-    print(f"[+] Discovered {len(peers)} Vivos Peer Nodes: {peers}")
-    
-    # 3. Aggregate Integrity
-    my_aggregate = manifest.get("aggregate")
-    aggregate_peers = []
-    for peer in peers:
-        peer_manifest_path = os.path.join(workspace_root, peer, ".vivos/manifest.json")
-        try:
-            with open(peer_manifest_path, "r") as pf:
-                p_manifest = json.load(pf)
-                if p_manifest.get("aggregate") == my_aggregate:
-                    aggregate_peers.append(peer)
-        except:
-            continue
-            
-    print(f"[+] Aggregate '{my_aggregate}' Integrity: {len(aggregate_peers)} members active.")
-    
-    # 4. Result Affirmation
-    if len(aggregate_peers) > 0:
-        print("[TOTAL AFFIRMATION] Core resonance detected.")
+    for member in EXPECTED_MEMBERS:
+        p_manifest_path = os.path.join(workspace_root, member, ".vivos/manifest.json")
+        if os.path.exists(p_manifest_path):
+            try:
+                with open(p_manifest_path, "r") as pf:
+                    p_manifest = json.load(pf)
+                    if p_manifest.get("aggregate") == "WRAITH-MESH":
+                        discovered_members.append(member)
+            except:
+                continue
+                
+    print(f"[+] WRAITH-MESH Fusion Status: {len(discovered_members)}/{len(EXPECTED_MEMBERS)} members active.")
+    for member in EXPECTED_MEMBERS:
+        status = "ONLINE" if member in discovered_members else "OFFLINE"
+        print(f"  - {member}: {status}")
+        
+    # 3. Resonance Logic
+    if len(discovered_members) == len(EXPECTED_MEMBERS):
+        print("[TOTAL AFFIRMATION] WRAITH-MESH IS FULLY RESONANT.")
     else:
-        print("[!] WARNING: Isolated node detected. Check aggregate mapping.")
+        print("[!] WARNING: Incomplete Fusion. Some members are missing or misconfigured.")
         
     return True
 
 if __name__ == "__main__":
-    success = run_recursive_audit()
+    success = run_wraith_mesh_audit()
     sys.exit(0 if success else 1)

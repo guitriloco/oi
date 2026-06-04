@@ -1,0 +1,1214 @@
+[
+  {
+    "pulse_id": "heartbeat-1778026003927",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 117.16432300090673,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 16.56
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 12.829
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 10.801
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 11.110999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 12.705
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 11.832
+      },
+      "SUPRA": {
+        "status": "DOWN",
+        "error": ""
+      }
+    },
+    "timestamp": 1778026003.9276335
+  },
+  {
+    "pulse_id": "heartbeat-1778026036747",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 22.57031699991785,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 19.211
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 15.517
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 13.180000000000001
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 13.574
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 13.772
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 16.42
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 14.021
+      }
+    },
+    "timestamp": 1778026036.7476797
+  },
+  {
+    "pulse_id": "heartbeat-1778026037963",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 11.942672999794013,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 9.238
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 10.649000000000001
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 6.2459999999999996
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 6.119999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 6.486
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 6.6160000000000005
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 7.329
+      }
+    },
+    "timestamp": 1778026037.9632044
+  },
+  {
+    "status": "OMNI_PULSE_SUCCESS",
+    "pulse_id": "pulse-1778026041",
+    "total_latency_ms": 104.35023399986676,
+    "summary": {
+      "path": "Synthesized_Result_for_1e80b39b",
+      "siphoned": 141.2054681777954,
+      "yield_grade": "HIGH",
+      "vault_id": "ce9b9e2d323f0eebd2f1096a0caadac37b807d887bff4c0538c4cb24bafa4c3f"
+    },
+    "data_mesh": {
+      "prediction": "Synthesized_Result_for_1e80b39b",
+      "siphon": {
+        "status": "SIPHON_COMPLETE",
+        "acquired": 141.2054681777954,
+        "tx_proof": "90f8177fd80c10feb02ccf2dab6a7f69fcebee4b3c18f28af027f7ac1184a0cd",
+        "timestamp": 1778026041.2067144
+      },
+      "integration": {
+        "status": "refinement_executed",
+        "result": {
+          "status": "SUCCESS",
+          "refined_logic": "Optimized logic based on Omni-Pulse Integration (pulse-1778026041)",
+          "nectar_yield": 0.98,
+          "Pure_Gold": "Standard_Nectar",
+          "timestamp": 1778026041.2571957
+        }
+      },
+      "evolution": {
+        "status": "ARCHITECTURE_MUTATED",
+        "target": "OI",
+        "mutation_log": "mutation_logs/mutation_1778026041_oi_engine.cpp",
+        "timestamp": 1778026041.2901618
+      },
+      "harvest": {
+        "status": "success",
+        "result": "Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Synthesized_Result_for_1e80b39b_at_lvl_1.0_at_lvl_1.5_at_lvl_2.0_at_lvl_2.5_at_lvl_3.0_at_lvl_3.5_at_lvl_4.0_at_lvl_4.5_at_lvl_5.0",
+        "timestamp": 1778026041.2948022
+      },
+      "preservation": {
+        "status": "preserved",
+        "vault_id": "ce9b9e2d323f0eebd2f1096a0caadac37b807d887bff4c0538c4cb24bafa4c3f",
+        "timestamp": 1778026041.3007467
+      },
+      "monitoring": {
+        "status": "observed",
+        "prediction": "Synthesized_Result_for_43cd7d36",
+        "timestamp": 1778026041.3031201
+      }
+    },
+    "timestamp": 1778026041.3042042
+  },
+  {
+    "pulse_id": "heartbeat-1778026046564",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 20.407624000654323,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 19.77
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 16.448999999999998
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 13.007
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 13.256
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 14.697999999999999
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 13.132
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 15.334999999999999
+      }
+    },
+    "timestamp": 1778026046.564284
+  },
+  {
+    "pulse_id": "heartbeat-1778026046803",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 10.28626399966015,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 7.655
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.07
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 5.067
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 4.944
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 5.292
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 5.525
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 6.381
+      }
+    },
+    "timestamp": 1778026046.8038478
+  },
+  {
+    "pulse_id": "heartbeat-1778026047071",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 15.28989300095418,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 12.239999999999998
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 13.687
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 8.149999999999999
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 7.675999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.14
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.234
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 6.289999999999999
+      }
+    },
+    "timestamp": 1778026047.0714164
+  },
+  {
+    "pulse_id": "heartbeat-1778026441300",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 23.422786998708034,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 18.93
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 15.503
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 14.516
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 16.0
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 15.997999999999998
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 16.9
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 16.058
+      }
+    },
+    "timestamp": 1778026441.3008823
+  },
+  {
+    "pulse_id": "heartbeat-1778026441335",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 26.0505229998671,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 19.757
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 15.675999999999998
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 15.753
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 15.693999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 15.697
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 18.893
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 18.895
+      }
+    },
+    "timestamp": 1778026441.3358853
+  },
+  {
+    "pulse_id": "heartbeat-1778026441369",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 26.65708000131417,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 18.404
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 21.651
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 14.241999999999999
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 18.862000000000002
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 13.981
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 17.768
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 18.193
+      }
+    },
+    "timestamp": 1778026441.369837
+  },
+  {
+    "status": "OMNI_PULSE_SUCCESS",
+    "pulse_id": "pulse-1778026441",
+    "total_latency_ms": 87.94428900000639,
+    "summary": {
+      "path": "Synthesized_Result_for_28620a15",
+      "siphoned": 141.38351130485535,
+      "yield_grade": "HIGH",
+      "vault_id": "e87df260f0ee8e410ebc8b6fa835f17cce70b22da93e0a1efef0dad78d3c52b3"
+    },
+    "data_mesh": {
+      "prediction": "Synthesized_Result_for_28620a15",
+      "siphon": {
+        "status": "SIPHON_COMPLETE",
+        "acquired": 141.38351130485535,
+        "tx_proof": "71bced289825bf2ec54917f48822f3aa550a728a857d32bb3bd3ffc4a07ae952",
+        "timestamp": 1778026441.3842394
+      },
+      "integration": {
+        "status": "refinement_executed",
+        "result": {
+          "status": "SUCCESS",
+          "refined_logic": "Optimized logic based on Omni-Pulse Integration (pulse-1778026441)",
+          "nectar_yield": 0.98,
+          "Pure_Gold": "Standard_Nectar",
+          "timestamp": 1778026441.4125962
+        }
+      },
+      "evolution": {
+        "status": "ARCHITECTURE_MUTATED",
+        "target": "OI",
+        "mutation_log": "mutation_logs/mutation_1778026441_oi_engine.cpp",
+        "timestamp": 1778026441.4477148
+      },
+      "harvest": {
+        "status": "success",
+        "result": "Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Synthesized_Result_for_28620a15_at_lvl_1.0_at_lvl_1.5_at_lvl_2.0_at_lvl_2.5_at_lvl_3.0_at_lvl_3.5_at_lvl_4.0_at_lvl_4.5_at_lvl_5.0",
+        "timestamp": 1778026441.4524665
+      },
+      "preservation": {
+        "status": "preserved",
+        "vault_id": "e87df260f0ee8e410ebc8b6fa835f17cce70b22da93e0a1efef0dad78d3c52b3",
+        "timestamp": 1778026441.4574988
+      },
+      "monitoring": {
+        "status": "observed",
+        "prediction": "Synthesized_Result_for_97f34727",
+        "timestamp": 1778026441.4629147
+      }
+    },
+    "timestamp": 1778026441.464423
+  },
+  {
+    "pulse_id": "heartbeat-1778118828711",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 114.4833660000586,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 16.794
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 12.519
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 13.767
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 12.884
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.82
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 13.051
+      },
+      "SUPRA": {
+        "status": "DOWN",
+        "error": ""
+      }
+    },
+    "timestamp": 1778118828.71142
+  },
+  {
+    "pulse_id": "heartbeat-1778118828830",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 112.06229299932602,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 14.461
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 10.335
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 11.938
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 10.64
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.657
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.328999999999999
+      },
+      "SUPRA": {
+        "status": "DOWN",
+        "error": ""
+      }
+    },
+    "timestamp": 1778118828.830982
+  },
+  {
+    "pulse_id": "heartbeat-1778118828855",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 17.1375200006878,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 16.580000000000002
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.942
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 12.236
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 11.440999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.674
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 12.35
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 12.299
+      }
+    },
+    "timestamp": 1778118828.855116
+  },
+  {
+    "pulse_id": "heartbeat-1778118828882",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 20.220804999553366,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 14.411999999999999
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.034
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 12.091
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 10.68
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 14.649000000000001
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 13.214
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 13.314
+      }
+    },
+    "timestamp": 1778118828.882546
+  },
+  {
+    "status": "OMNI_PULSE_SUCCESS",
+    "pulse_id": "pulse-1778118828",
+    "total_latency_ms": 74.19571700302185,
+    "summary": {
+      "path": "Predictive Match: Synthesized_Result_for_28620a15",
+      "siphoned": 128.89464712142944,
+      "yield_grade": "HIGH",
+      "vault_id": "868e5e0f1a3f58d328706749dc1a99e4bca2d8dd9a9e33efbbadf971e40a57fc"
+    },
+    "data_mesh": {
+      "prediction": "Predictive Match: Synthesized_Result_for_28620a15",
+      "siphon": {
+        "status": "SIPHON_COMPLETE",
+        "acquired": 128.89464712142944,
+        "tx_proof": "d8b4e1afd4fc82d13fad493f58b08c1a720c42d69c6142060449741b28b7e7d7",
+        "timestamp": 1778118828.8955095
+      },
+      "integration": {
+        "status": "refinement_executed",
+        "result": {
+          "status": "SUCCESS",
+          "refined_logic": "Optimized logic based on Omni-Pulse Integration (pulse-1778118828)",
+          "nectar_yield": 0.98,
+          "Pure_Gold": "Standard_Nectar",
+          "timestamp": 1778118828.9215713
+        }
+      },
+      "evolution": {
+        "status": "ARCHITECTURE_MUTATED",
+        "target": "OI",
+        "mutation_log": "mutation_logs/mutation_1778118828_oi_engine.cpp",
+        "timestamp": 1778118828.9508274
+      },
+      "harvest": {
+        "status": "success",
+        "result": "Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Predictive Match: Synthesized_Result_for_28620a15_at_lvl_1.0_at_lvl_1.5_at_lvl_2.0_at_lvl_2.5_at_lvl_3.0_at_lvl_3.5_at_lvl_4.0_at_lvl_4.5_at_lvl_5.0",
+        "timestamp": 1778118828.9539773
+      },
+      "preservation": {
+        "status": "preserved",
+        "vault_id": "868e5e0f1a3f58d328706749dc1a99e4bca2d8dd9a9e33efbbadf971e40a57fc",
+        "timestamp": 1778118828.9569104
+      },
+      "monitoring": {
+        "status": "observed",
+        "prediction": "Synthesized_Result_for_02596cef",
+        "timestamp": 1778118828.96176
+      }
+    },
+    "timestamp": 1778118828.9626906
+  },
+  {
+    "pulse_id": "heartbeat-1778118832824",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 21.3002080017759,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 11.077
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 19.48
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 10.126
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 9.958
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 16.021
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 14.745
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 16.368000000000002
+      }
+    },
+    "timestamp": 1778118832.8241432
+  },
+  {
+    "pulse_id": "heartbeat-1778118832866",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 27.524421999260085,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 15.086
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 21.186
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 14.046
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 14.491999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 14.39
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 14.427000000000001
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 21.218
+      }
+    },
+    "timestamp": 1778118832.8660035
+  },
+  {
+    "pulse_id": "heartbeat-1778118832895",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 15.081557998200879,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 9.325
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 13.535
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 7.518000000000001
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 8.767000000000001
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 7.738
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 8.405
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 10.183
+      }
+    },
+    "timestamp": 1778118832.8952477
+  },
+  {
+    "pulse_id": "heartbeat-1778118832929",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 19.12282800185494,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 11.593
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 17.105
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 10.245000000000001
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 10.89
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.389
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.391
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 12.344000000000001
+      }
+    },
+    "timestamp": 1778118832.9294686
+  },
+  {
+    "status": "OMNI_PULSE_SUCCESS",
+    "pulse_id": "pulse-1778118832",
+    "total_latency_ms": 114.02637799983495,
+    "summary": {
+      "path": "Predictive Match: Synthesized_Result_for_28620a15",
+      "siphoned": 132.94704461097717,
+      "yield_grade": "HIGH",
+      "vault_id": "fd4d3cf80f7e763f8bdcc1edb5f674fd113d9f7a2618acac1a4cce9316db42c4"
+    },
+    "data_mesh": {
+      "prediction": "Predictive Match: Synthesized_Result_for_28620a15",
+      "siphon": {
+        "status": "SIPHON_COMPLETE",
+        "acquired": 132.94704461097717,
+        "tx_proof": "f4dde51b5de99e54e0bc51b2d108b65eb246eb1731c4350b25ac64f903b17665",
+        "timestamp": 1778118832.949077
+      },
+      "integration": {
+        "status": "refinement_executed",
+        "result": {
+          "status": "SUCCESS",
+          "refined_logic": "Optimized logic based on Omni-Pulse Integration (pulse-1778118832)",
+          "nectar_yield": 0.98,
+          "Pure_Gold": "Standard_Nectar",
+          "timestamp": 1778118833.001186
+        }
+      },
+      "evolution": {
+        "status": "ARCHITECTURE_MUTATED",
+        "target": "OI",
+        "mutation_log": "mutation_logs/mutation_1778118833_oi_engine.cpp",
+        "timestamp": 1778118833.04507
+      },
+      "harvest": {
+        "status": "success",
+        "result": "Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Predictive Match: Synthesized_Result_for_28620a15_at_lvl_1.0_at_lvl_1.5_at_lvl_2.0_at_lvl_2.5_at_lvl_3.0_at_lvl_3.5_at_lvl_4.0_at_lvl_4.5_at_lvl_5.0",
+        "timestamp": 1778118833.0479043
+      },
+      "preservation": {
+        "status": "preserved",
+        "vault_id": "fd4d3cf80f7e763f8bdcc1edb5f674fd113d9f7a2618acac1a4cce9316db42c4",
+        "timestamp": 1778118833.050696
+      },
+      "monitoring": {
+        "status": "observed",
+        "prediction": "Synthesized_Result_for_7f2debc1",
+        "timestamp": 1778118833.0536573
+      }
+    },
+    "timestamp": 1778118833.0552368
+  },
+  {
+    "pulse_id": "heartbeat-1778118856773",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 16.82956499644206,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 16.334999999999997
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.912
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 12.167000000000002
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 13.792
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.758
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.857999999999999
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 11.546000000000001
+      }
+    },
+    "timestamp": 1778118856.7732604
+  },
+  {
+    "pulse_id": "heartbeat-1778118856798",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 16.91757799926563,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 16.305
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.908999999999999
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 12.152
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 12.101
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.267
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 11.709000000000001
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 12.613
+      }
+    },
+    "timestamp": 1778118856.7984445
+  },
+  {
+    "pulse_id": "heartbeat-1778118856824",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 15.967088998877443,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 15.465
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.053
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 11.360999999999999
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 11.286
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 10.379
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.415000000000001
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 11.362
+      }
+    },
+    "timestamp": 1778118856.8240526
+  },
+  {
+    "pulse_id": "heartbeat-1778118856847",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 14.911717000359204,
+    "nodes": {
+      "HUB": {
+        "status": "ACTIVE",
+        "latency_ms": 14.426
+      },
+      "ARCHITECT": {
+        "status": "ACTIVE",
+        "latency_ms": 8.876999999999999
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 10.62
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 9.381
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 8.208
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 11.216000000000001
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 11.375
+      }
+    },
+    "timestamp": 1778118856.8470123
+  },
+  {
+    "status": "OMNI_PULSE_SUCCESS",
+    "pulse_id": "pulse-1778118856",
+    "total_latency_ms": 77.39367600152036,
+    "summary": {
+      "path": "Predictive Match: Synthesized_Result_for_28620a15",
+      "siphoned": 106.86050200462341,
+      "yield_grade": "HIGH",
+      "vault_id": "365b20ec0040f85475359615887c4cc6ab12c929172db350ff62af60216b87b2"
+    },
+    "data_mesh": {
+      "prediction": "Predictive Match: Synthesized_Result_for_28620a15",
+      "siphon": {
+        "status": "SIPHON_COMPLETE",
+        "acquired": 106.86050200462341,
+        "tx_proof": "2dada4fb10143e59350a59861b3abc62fc692e52e69c4cd3303cbfeff70e839d",
+        "timestamp": 1778118856.861481
+      },
+      "integration": {
+        "status": "refinement_executed",
+        "result": {
+          "status": "SUCCESS",
+          "refined_logic": "Optimized logic based on Omni-Pulse Integration (pulse-1778118856)",
+          "nectar_yield": 0.98,
+          "Pure_Gold": "Standard_Nectar",
+          "timestamp": 1778118856.8877907
+        }
+      },
+      "evolution": {
+        "status": "ARCHITECTURE_MUTATED",
+        "target": "OI",
+        "mutation_log": "mutation_logs/mutation_1778118856_oi_engine.cpp",
+        "timestamp": 1778118856.9210107
+      },
+      "harvest": {
+        "status": "success",
+        "result": "Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Predictive Match: Synthesized_Result_for_28620a15_at_lvl_1.0_at_lvl_1.5_at_lvl_2.0_at_lvl_2.5_at_lvl_3.0_at_lvl_3.5_at_lvl_4.0_at_lvl_4.5_at_lvl_5.0",
+        "timestamp": 1778118856.924112
+      },
+      "preservation": {
+        "status": "preserved",
+        "vault_id": "365b20ec0040f85475359615887c4cc6ab12c929172db350ff62af60216b87b2",
+        "timestamp": 1778118856.9272046
+      },
+      "monitoring": {
+        "status": "observed",
+        "prediction": "Synthesized_Result_for_794752cc",
+        "timestamp": 1778118856.930436
+      }
+    },
+    "timestamp": 1778118856.9314134
+  },
+  {
+    "pulse_id": "heartbeat-1778118874819",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 16.303414999129018,
+    "nodes": {
+      "HUB": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "ARCHITECT": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 9.315
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 9.62
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.622
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.265
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 9.682
+      }
+    },
+    "timestamp": 1778118874.8196483
+  },
+  {
+    "pulse_id": "heartbeat-1778118874844",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 16.343666000466328,
+    "nodes": {
+      "HUB": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "ARCHITECT": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 9.526
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 9.802999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.939
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.567
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 9.708
+      }
+    },
+    "timestamp": 1778118874.844797
+  },
+  {
+    "pulse_id": "heartbeat-1778118874869",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 16.752515999542084,
+    "nodes": {
+      "HUB": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "ARCHITECT": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 9.42
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 9.526
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 9.779
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 10.472999999999999
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 9.512
+      }
+    },
+    "timestamp": 1778118874.869564
+  },
+  {
+    "pulse_id": "heartbeat-1778118874896",
+    "type": "HEARTBEAT",
+    "total_latency_ms": 18.877629001508467,
+    "nodes": {
+      "HUB": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "ARCHITECT": {
+        "status": "DOWN",
+        "error": "All connection attempts failed"
+      },
+      "OBSERVER": {
+        "status": "ACTIVE",
+        "latency_ms": 11.488999999999999
+      },
+      "YIELD": {
+        "status": "ACTIVE",
+        "latency_ms": 11.549999999999999
+      },
+      "VAULT": {
+        "status": "ACTIVE",
+        "latency_ms": 11.59
+      },
+      "REX": {
+        "status": "ACTIVE",
+        "latency_ms": 12.859
+      },
+      "SUPRA": {
+        "status": "ACTIVE",
+        "latency_ms": 12.005
+      }
+    },
+    "timestamp": 1778118874.8965595
+  },
+  {
+    "status": "OMNI_PULSE_SUCCESS",
+    "pulse_id": "pulse-1778118874",
+    "total_latency_ms": 78.83082399712293,
+    "summary": {
+      "path": "Synthesized_Result_for_28620a15",
+      "siphoned": 124.90937733650208,
+      "yield_grade": "HIGH",
+      "vault_id": "9a3d179e596470d34556966c67e9e44b5ec1e9ef76b4a54ee56f71ac9698ebf2"
+    },
+    "data_mesh": {
+      "prediction": "Synthesized_Result_for_28620a15",
+      "siphon": {
+        "status": "SIPHON_COMPLETE",
+        "acquired": 124.90937733650208,
+        "tx_proof": "01a65aafdc9be6bf5a687b521e6e94a38340abbfdcc89ba0056ee4dbbef18e69",
+        "timestamp": 1778118874.9105237
+      },
+      "integration": {
+        "status": "refinement_executed",
+        "result": {
+          "status": "SUCCESS",
+          "refined_logic": "Optimized logic based on Omni-Pulse Integration (pulse-1778118874)",
+          "nectar_yield": 0.98,
+          "Pure_Gold": "Standard_Nectar",
+          "timestamp": 1778118874.9404132
+        }
+      },
+      "evolution": {
+        "status": "ARCHITECTURE_MUTATED",
+        "target": "OI",
+        "mutation_log": "mutation_logs/mutation_1778118874_oi_engine.cpp",
+        "timestamp": 1778118874.9720874
+      },
+      "harvest": {
+        "status": "success",
+        "result": "Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Optimized_Synthesized_Result_for_28620a15_at_lvl_1.0_at_lvl_1.5_at_lvl_2.0_at_lvl_2.5_at_lvl_3.0_at_lvl_3.5_at_lvl_4.0_at_lvl_4.5_at_lvl_5.0",
+        "timestamp": 1778118874.975197
+      },
+      "preservation": {
+        "status": "preserved",
+        "vault_id": "9a3d179e596470d34556966c67e9e44b5ec1e9ef76b4a54ee56f71ac9698ebf2",
+        "timestamp": 1778118874.9783766
+      },
+      "monitoring": {
+        "status": "observed",
+        "prediction": "Synthesized_Result_for_bc489c22",
+        "timestamp": 1778118874.9814389
+      }
+    },
+    "timestamp": 1778118874.9823768
+  }
+]

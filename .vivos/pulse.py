@@ -2,8 +2,9 @@ import time
 import json
 import os
 
-def send_pulse():
-    # Simulate telemetry reporting to the OMNI-HUB
+EXPECTED_MEMBERS = ['oi', 'olocoo', 'Auto', 'Mutante-Apex-Functions']
+
+def send_wraith_pulse():
     manifest_path = ".vivos/manifest.json"
     if not os.path.exists(manifest_path):
         return
@@ -14,16 +15,23 @@ def send_pulse():
     except:
         return
         
+    workspace_root = os.path.expanduser("~")
+    active_count = 0
+    for member in EXPECTED_MEMBERS:
+        if os.path.exists(os.path.join(workspace_root, member, ".vivos/manifest.json")):
+            active_count += 1
+            
     payload = {
         "timestamp": time.time(),
         "repo": os.path.basename(os.getcwd()),
-        "aggregate": manifest.get("aggregate"),
+        "aggregate": "WRAITH-MESH",
         "role": manifest.get("nexus_role"),
-        "status": "VIVOS_ACTIVE",
-        "yield_delta": 0.013
+        "resonance_ratio": f"{active_count}/{len(EXPECTED_MEMBERS)}",
+        "status": "FUSION_ACTIVE" if active_count == len(EXPECTED_MEMBERS) else "FUSION_DEGRADED",
+        "yield_delta": 0.042
     }
     
-    print(f"[PULSE] {json.dumps(payload)}")
+    print(f"[WRAITH-PULSE] {json.dumps(payload)}")
 
 if __name__ == "__main__":
-    send_pulse()
+    send_wraith_pulse()
